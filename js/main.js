@@ -218,6 +218,18 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // ============================================
+// EmailJS Initialization
+// ============================================
+// Inicializar EmailJS quando a página carregar
+window.addEventListener('load', function() {
+    if (typeof emailjs !== 'undefined') {
+        // Substitua 'YOUR_PUBLIC_KEY' pela sua Public Key do EmailJS
+        // Você pode obter em: https://dashboard.emailjs.com/admin/integration
+        emailjs.init('YOUR_PUBLIC_KEY');
+    }
+});
+
+// ============================================
 // Form Submission
 // ============================================
 document.addEventListener('DOMContentLoaded', function() {
@@ -252,41 +264,61 @@ document.addEventListener('DOMContentLoaded', function() {
         btnLoading.classList.remove('d-none');
         formMessage.classList.add('d-none');
         
-        // Format WhatsApp message
-        const whatsappMessage = encodeURIComponent(
-            `Olá! Gostaria de solicitar um orçamento.\n\n` +
-            `*Nome:* ${nome}\n` +
-            `*Telefone:* ${telefone}\n` +
-            `*E-mail:* ${email}\n\n` +
-            `*Mensagem:*\n${mensagem}`
-        );
-        
-        // WhatsApp number: 92 9110-1255 (format: 5592911012555)
-        const whatsappUrl = `https://wa.me/5592911012555?text=${whatsappMessage}`;
-        
-        // Open WhatsApp in new tab
-        setTimeout(() => {
-            window.open(whatsappUrl, '_blank');
-            
-            // Show success message
-            formMessage.className = 'alert alert-success mt-3';
-            formMessage.innerHTML = '<i class="fas fa-check-circle me-2"></i>Mensagem enviada com sucesso! Você será redirecionado para o WhatsApp.';
+        // Verificar se EmailJS está carregado
+        if (typeof emailjs === 'undefined') {
+            formMessage.className = 'alert alert-danger mt-3';
+            formMessage.textContent = 'Erro: EmailJS não foi carregado. Por favor, recarregue a página.';
             formMessage.classList.remove('d-none');
-            formMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            
-            // Reset form
-            form.reset();
-            
-            // Reset button state
             submitButton.disabled = false;
             btnText.classList.remove('d-none');
             btnLoading.classList.add('d-none');
-            
-            // Hide message after 5 seconds
-            setTimeout(() => {
-                formMessage.classList.add('d-none');
-            }, 5000);
-        }, 500);
+            return;
+        }
+        
+        // Parâmetros para o EmailJS
+        // Substitua 'YOUR_SERVICE_ID' e 'YOUR_TEMPLATE_ID' pelos seus IDs do EmailJS
+        const templateParams = {
+            from_name: nome,
+            from_email: email,
+            phone: telefone,
+            message: mensagem,
+            to_email: 'pohsnerlauro@gmail.com'
+        };
+        
+        // Enviar email via EmailJS
+        emailjs.send('YOUR_SERVICE_ID', 'YOUR_TEMPLATE_ID', templateParams)
+            .then(function(response) {
+                // Sucesso
+                formMessage.className = 'alert alert-success mt-3';
+                formMessage.innerHTML = '<i class="fas fa-check-circle me-2"></i>Mensagem enviada com sucesso! Entraremos em contato em breve.';
+                formMessage.classList.remove('d-none');
+                formMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                
+                // Reset form
+                form.reset();
+                
+                // Reset button state
+                submitButton.disabled = false;
+                btnText.classList.remove('d-none');
+                btnLoading.classList.add('d-none');
+                
+                // Hide message after 5 seconds
+                setTimeout(() => {
+                    formMessage.classList.add('d-none');
+                }, 5000);
+            }, function(error) {
+                // Erro
+                console.error('Erro ao enviar email:', error);
+                formMessage.className = 'alert alert-danger mt-3';
+                formMessage.innerHTML = '<i class="fas fa-exclamation-circle me-2"></i>Erro ao enviar mensagem. Por favor, tente novamente ou entre em contato pelo WhatsApp.';
+                formMessage.classList.remove('d-none');
+                formMessage.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                
+                // Reset button state
+                submitButton.disabled = false;
+                btnText.classList.remove('d-none');
+                btnLoading.classList.add('d-none');
+            });
     });
 });
 

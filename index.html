@@ -46,6 +46,9 @@
                         <a class="nav-link" href="#depoimentos">Avaliações</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="#galeria">Galeria</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="#contato">Contato</a>
                     </li>
                 </ul>
@@ -329,6 +332,65 @@
         </div>
     </section>
 
+    <!-- Galeria Section -->
+    <section id="galeria" class="galeria-section py-5">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-12 text-center">
+                    <h2 class="section-title fade-in">Nossa Galeria</h2>
+                    <p class="section-subtitle fade-in delay-1">Conheça nossos produtos e instalações</p>
+                </div>
+            </div>
+            
+            <!-- Carousel -->
+            <div class="row mb-4">
+                <div class="col-12">
+                    <div id="galleryCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="false">
+                        <div class="carousel-inner">
+                            <!-- Imagens serão inseridas dinamicamente via JavaScript -->
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#galleryCarousel" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Anterior</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#galleryCarousel" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Próxima</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Thumbnails Grid -->
+            <div class="row g-3" id="galleryThumbnails">
+                <!-- Thumbnails serão inseridos dinamicamente via JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Lightbox Modal -->
+    <div class="modal fade" id="imageLightbox" tabindex="-1" aria-labelledby="imageLightboxLabel" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content">
+                <div class="modal-header border-0">
+                    <h5 class="modal-title" id="imageLightboxLabel">
+                        <span id="currentImageNumber">1</span> de <span id="totalImages">24</span>
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body p-0 d-flex align-items-center justify-content-center">
+                    <img id="lightboxImage" src="" alt="Ampliada" class="img-fluid">
+                    <button class="lightbox-nav lightbox-prev" id="lightboxPrev">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button class="lightbox-nav lightbox-next" id="lightboxNext">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- Contato Section -->
     <section id="contato" class="contato-section py-5">
         <div class="container">
@@ -388,7 +450,7 @@
                     <div class="contact-info fade-in-up delay-1">
                         <i class="fas fa-envelope contact-icon"></i>
                         <h5>E-mail</h5>
-                        <a href="mailto:moliveiraferreira247@gmail.com">moliveiraferreira247@gmail.com</a>
+                        <a href="mailto:pohsnerlauro@gmail.com">pohsnerlauro@gmail.com</a>
                     </div>
                 </div>
                 <div class="col-md-4 text-center mb-4">
@@ -413,7 +475,7 @@
                     <a href="https://wa.me/5592911012555" target="_blank" class="social-link me-3">
                         <i class="fab fa-whatsapp"></i>
                     </a>
-                    <a href="mailto:moliveiraferreira247@gmail.com" class="social-link">
+                    <a href="mailto:pohsnerlauro@gmail.com" class="social-link">
                         <i class="fas fa-envelope"></i>
                     </a>
                 </div>
@@ -424,7 +486,11 @@
     <!-- Bootstrap 5 JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     
+    <!-- EmailJS -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    
     <!-- Custom JS -->
+    <script src="js/gallery.js"></script>
     <script src="js/main.js"></script>
 </body>
 </html>
