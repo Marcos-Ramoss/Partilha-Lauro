@@ -75,9 +75,16 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
+    // Inicializar carousel sem autoplay
+    const carouselElement = document.getElementById('galleryCarousel');
+    const carousel = new bootstrap.Carousel(carouselElement, {
+        interval: false,
+        wrap: true,
+        keyboard: true
+    });
+    
     // Atualizar thumbnail ativo quando carousel muda
-    const carousel = document.getElementById('galleryCarousel');
-    carousel.addEventListener('slid.bs.carousel', function(event) {
+    carouselElement.addEventListener('slid.bs.carousel', function(event) {
         const activeIndex = event.to;
         currentImageIndex = activeIndex;
         
@@ -85,6 +92,8 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelectorAll('.gallery-thumbnail').forEach((thumb, index) => {
             if (index === activeIndex) {
                 thumb.classList.add('active');
+                // Scroll suave para o thumbnail ativo
+                thumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
             } else {
                 thumb.classList.remove('active');
             }
